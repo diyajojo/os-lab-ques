@@ -1,1 +1,1 @@
-# os-lab-ques
+simplified version of os lab question 
