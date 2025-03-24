@@ -42,7 +42,7 @@ int main()
     }
      char *shm=shmat(shmid,NULL,0);
 
-     if(shm === (char*)1)
+     if(shm == (char*)1)
      {
         perror("cant attach the shared memory");
         exit(0);
