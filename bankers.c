@@ -1,50 +1,80 @@
 #include <stdio.h>
 
-define MAX 100;
+#define MAX 10
 
-int p,r;
-int max[MAX][MAX];
-int alloc[MAX][MAX];
-int avail[MAX];
-int need[MAX][MAX];
-int flag=0;
-int count=0;
+int max[MAX][MAX], alloc[MAX][MAX], avail[MAX], tempavail[MAX], need[MAX][MAX], finish[MAX];
+int p = 0, r = 0, canRun = 0;
+int count = 0;
 
-while (count<p)
-{
-    for(int i=0;i<p;i++)
-    {
+int Safe(int p, int r, int tempavail[], int finish[]) {
+    int done;
+    count = 0;
+
+    while (count < p) {
+        done = 0;
+        for (int i = 0; i < p; i++) {
+            if (finish[i] == 0) {
+                canRun = 1;
+                
+                // Calculate need matrix
+                for (int j = 0; j < r; j++) {
+                    need[i][j] = max[i][j] - alloc[i][j];
+                    if (need[i][j] > tempavail[j]) {
+                        canRun = 0;
+                        break;
+                    }
+                }
+
+                if (canRun == 1) {
+                    // Process can execute
+                    for (int j = 0; j < r; j++) {
+                        tempavail[j] += alloc[i][j];
+                    }
+                    finish[i] = 1;
+                    count++;
+                    done = 1;
+                }
+            }
+        }
         
+        if (done == 0)
+            return 0;  // Deadlock detected
     }
+    return 1;  // No deadlock
 }
 
-int main()
-{
-    printf("enter the number of process and resources\n");
-    scabf("%d%d",&p,&r);
+int main() {
+    printf("Enter number of processes and resources:\n");
+    scanf("%d%d", &p, &r);
 
-    printf("enter the max resources matrix \n");
-    for(int i=0;i<p;i++)
-    {
-        for (int j=0;j<r;j++)
-        {
-            scanf("%d",&max[i][j]);
+    printf("Enter max resource matrix:\n");
+    for (int i = 0; i < p; i++) {
+        for (int j = 0; j < r; j++) {
+            scanf("%d", &max[i][j]);
         }
     }
 
-    printf("enter the allocated resources matrix \n");
-    for(int i=0;i<p;i++)
-    {
-        for (int j=0;j<r;j++)
-        {
-            scanf("%d",&alloc[i][j]);
+    printf("Enter allocated resource matrix:\n");
+    for (int i = 0; i < p; i++) {
+        for (int j = 0; j < r; j++) {
+            scanf("%d", &alloc[i][j]);
         }
     }
-    printf("enter the available resources \n");
-    for(int i=0;i<r;i++)
-    {
-        scanf("%d",&avail[i]);
+
+    printf("Enter available resources:\n");
+    for (int i = 0; i < r; i++) {
+        scanf("%d", &avail[i]);
+        tempavail[i] = avail[i];
     }
-    
-    int k=ifisSafe(max,alloc,avail,p,r)
+
+    for (int i = 0; i < p; i++) {
+        finish[i] = 0;
+    }
+
+    if (Safe(p, r, tempavail, finish))
+        printf("Deadlock not present\n");
+    else
+        printf("Deadlock detected\n");
+
+    return 0;
 }
