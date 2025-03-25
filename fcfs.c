@@ -47,6 +47,21 @@ void avgTime(int np,int at[],int bt[])
     findWT(np,at,bt);
     findTAT(np,bt,wt);
     
+    int startTime[MAX], finishTime[MAX];
+    startTime[0] = at[0];
+    finishTime[0] = startTime[0] + bt[0];
+    
+    for(int i=1; i<np; i++) {
+        startTime[i] = finishTime[i-1];
+        finishTime[i] = startTime[i] + bt[i];
+    }
+    
+    printf("Gantt Chart:\n");
+    printf("Process\tAT\tBT\tWT\tTAT\tStart\tFinish\n");
+    for(int i=0; i<np; i++) {
+        printf("P%d\t%d\t%d\t%d\t%d\t%d\t%d\n", i+1, at[i], bt[i], wt[i], tat[i], startTime[i], finishTime[i]);
+    }
+    
     for(int i=0;i<np;i++)
     {
          sumWT+=wt[i];
@@ -54,7 +69,7 @@ void avgTime(int np,int at[],int bt[])
     }
     avgwt=sumWT/np;
     avgtat=sumTAT/np;
-    printf("avg tat and avg wt is:\t%d and %d",avgtat,avgwt);
+    printf("avg tat and avg wt is:\t%d and %d\n",avgtat,avgwt);
 }
 
 

@@ -6,16 +6,15 @@ int allocated[MAX];
 
 void bestFit(int blockSize[], int nb, int processSize[], int np)
 {
-    // Initialize allocation array to -1 (meaning "not allocated")
+    
     for (int i = 0; i < np; i++)
     {
         allocated[i] = -1;
     }
 
-    // Best-fit allocation
     for (int i = 0; i < np; i++)
     {
-        int minIndex = -1; // Track best-fit block
+        int minIndex = -1; 
 
         for (int j = 0; j < nb; j++)
         {
@@ -56,6 +55,8 @@ int main()
 {
     int blockSize[] = {100, 200, 300, 400, 500};
     int processSize[] = {212, 113, 456, 70};
+
+    // no need , since we know its alreadt 5 for nb and 4 for np
     int nb = sizeof(blockSize) / sizeof(blockSize[0]);
     int np = sizeof(processSize) / sizeof(processSize[0]);
 

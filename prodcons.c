@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h>  // for rand() to generate random numbers
 #include <pthread.h>
 #include <semaphore.h>
-#include <unistd.h>
+#include <unistd.h> // to call the sleep function
 
 #define SIZE 5
 
@@ -11,7 +11,9 @@ int in = 0, out = 0;
 
 sem_t mutex, full, empty;
 
-void *producer(void *arg) {
+// function both return NULL becuase return type is void* and they are called by the threads
+void *producer(void *arg) 
+{
     for (int i = 0; i < 5; i++) {
         int item = rand() % 100; // Generate a random item
 
@@ -48,13 +50,15 @@ void *consumer(void *arg) {
 }
 
 int main() {
+
     pthread_t prod, cons;
 
-    // Corrected semaphore initialization
-    sem_init(&mutex, 0, 1);
-    sem_init(&empty, 0, SIZE);
-    sem_init(&full, 0, 0);
 
+    sem_init(&mutex, 0, 1); // 1 indicates mutex is available
+    sem_init(&empty, 0, 0); // 0 indicates buffer is empty
+    sem_init(&full, 0, SIZE);// SIZE indicates buffer is full , the max value taken by full 
+
+// producer and cosnumer are the functions that are called by the threads with NULL arguements
     pthread_create(&prod, NULL, producer, NULL);
     pthread_create(&cons, NULL, consumer, NULL);
 

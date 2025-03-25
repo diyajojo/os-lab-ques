@@ -19,7 +19,7 @@ void firstFit(int blockSize[], int nb, int processSize[], int np)
             {
                 blockSize[j] -= processSize[i]; // Reduce available block size
                 allocated[i] = j; // Store block index
-                break; // Move to the next process
+                break; // Move to the next process , no checking for other blocks
             }
         }
     }
@@ -44,6 +44,9 @@ int main()
 {
     int blockSize[] = {250, 30, 456, 212, 117};
     int processSize[] = {100, 200, 300, 400};
+
+
+    // no need , since we know its alreadt 5 for nb and 4 for np
     int nb = sizeof(blockSize) / sizeof(blockSize[0]);
     int np = sizeof(processSize) / sizeof(processSize[0]);
 
