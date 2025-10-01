@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <semaphore.h>
-#include <stdlib.h>
+#include <stdlib.h> // to generate random number
 #include <pthread.h>
-#include <unistd.h>
+#include <unistd.h> // to  sleep the thread
 
-# define BUFFER 5
+#define BUFFER 5
 
 int in =0, out=0;
 int buffer[BUFFER];
@@ -13,7 +13,7 @@ pthread_t prod,cons;
 sem_t mutex,empty,full;
 
 
-
+// both the functions will return NULL as return type is void and is a thread
 void * producer(void *arg)
 {
   for(int i=0;i<5;i++)
@@ -65,6 +65,7 @@ int main()
     sem_init(&empty,0,BUFFER); // 3rd parameter is BUFFER , means initilal empty slots in the buffer
     sem_init(&full,0,0); // 3rd parameter is 0, means no slots are full initially
     
+    ///4th parameter means no arguments to the function
     pthread_create(&prod,NULL,producer,NULL);
     pthread_create(&cons,NULL,consumer,NULL);
     
