@@ -59,7 +59,6 @@ void allocateFile()
                fileCount++;
                return;
            }
-        }
         else
         {
             start=-1;

@@ -45,7 +45,7 @@ int main()
     
     printf("%d->",currentTrack);
     
-    for(int i=splitIndex;i<n;i++)
+    for(inti=splitIndex;i<n;i++)
     {
         nextTrack=trackno[i];
         totalSeektime+=abs(nextTrack-currentTrack);
