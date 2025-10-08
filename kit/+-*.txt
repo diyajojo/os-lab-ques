@@ -1,0 +1,61 @@
+ADDITION: 
+2000    MOV SI, 3000
+2003    MOV DI, 4000
+2006    MOV AX, [SI]
+2008    INC SI
+2009    INC SI
+200A    MOV BX, [SI]
+200C    ADD AX, BX
+200E    INC DI
+2010    MOV [DI], 0001  ; Appears to be an error/unusual step
+2013    JMP 2018        ; Appears to jump over 2015
+2015    MOV [DI], 0000  ; Likely the target of a jump for a loop
+2018    INC DI
+2019    MOV [DI], AX    ; Stores the result (AX) to [DI]
+201B    HLT
+
+SUBTRACTION :
+2000    MOV SI, 3000
+2003    MOV DI, 4000
+2006    MOV AX, [SI]
+2008    INC SI
+2009    INC SI
+200A    MOV BX, [SI]
+200C    CMP AX, BX      ; Compare AX and BX
+200E    JC 2017         ; Jump if Carry (if AX < BX)
+2010    SUB AX, BX      ; AX = AX - BX
+2012    MOV [DI], 0000  ; Store 0000 to [DI] - likely a flag for positive result
+2015    JMP 2022
+2017    MOV CX, AX      ; Save AX to CX
+2019    MOV AX, BX      ; AX = BX
+201B    MOV BX, CX      ; BX = CX (effectively swap AX and BX)
+201D    SUB AX, BX      ; AX = |Original AX - Original BX|
+201F    MOV [DI], 0001  ; Store 0001 to [DI] - likely a flag for negative result
+2022    INC DI
+2023    MOV [DI], AX    ; Stores the result (AX) to [DI]
+2025    HLT
+
+MULTIPLICATION: 
+2000    MOV SI, 3000
+2003    MOV DI, 4000
+2006    MOV AX, [SI]
+2008    INC SI
+2009    INC SI
+200A    MOV BX, [SI]
+200C    MUL BX          ; AX = AX * BX (16-bit) - result is in DX:AX
+200E    MOV [DI], AX    ; Stores the lower 16-bits of the result (AX) to [DI]
+2010    HLT
+
+DIVISION:
+2000    MOV SI, 3000
+2003    MOV DI, 4000
+2006    MOV AX, [SI]
+2008    INC SI
+2009    INC SI
+200A    MOV BX, [SI]
+200C    DIV BX          ; AX = AX / BX (Quotient), DX = AX % BX (Remainder)
+200E    MOV [DI], AX    ; Stores the Quotient (AX) to [DI]
+2010    INC DI
+2011    INC DI
+2012    MOV [DI], DX    ; Stores the Remainder (DX) to [DI]
+2014    HLT
