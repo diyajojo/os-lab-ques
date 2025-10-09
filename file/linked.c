@@ -60,6 +60,11 @@ void allocateFile()
     {
         int b;
         scanf("%d",&b);
+        if(b<0 || b> totalblocks || disks[b]==1)
+        {
+            printf("block is in use\n");
+            return;
+        }
         struct block * newblock=createblock(b);
         
         if(head==NULL)

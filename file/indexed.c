@@ -40,7 +40,7 @@ void allocateFiles()
     printf("enter the filesize\n");
     scanf("%d",&size);
     
-    for(int i=0;i<totalBlocks;i++)
+    for(int i=0;i<totalBlocks;i++)  
     {
         if(disk[i]==0)
         {
