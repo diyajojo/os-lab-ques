@@ -58,13 +58,13 @@ void bestFit(struct node *head,int processSize[],int np)
         
         if(bestBlock!=NULL)
         {
-        bestBlock->size -= processSize[i];
+            bestBlock->size -= processSize[i];
             allocated[i]=(bestBlock->index)+1;
         }
     }
    printf("\nprocess-size\t\tblock-no\n");
-for (int i = 0; i < np; i++)
-{
+   for (int i = 0; i < np; i++)
+    {
     printf("%d\t\t\t\t", processSize[i]);
     if (allocated[i] != -1)
     {
@@ -76,6 +76,7 @@ for (int i = 0; i < np; i++)
     }
 }
 }
+
 
 int main()
 {

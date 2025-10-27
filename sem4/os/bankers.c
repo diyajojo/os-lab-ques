@@ -1,23 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define MAX 1000
+#define MAX 100
 
 int max[MAX][MAX],alloc[MAX][MAX],avail[MAX],tempavail[MAX],finish[MAX],need[MAX][MAX];
-int r,p, done =0 ,count =0,canRun=0;
+int r,p,count =0,canRun=0;
 
-int isSafe(int p,int r,int tempavail[],int finish[])
+void isSafe()
 {
     while(count<p)
     {
         int done=0;
         for(int i=0;i<p;i++)
         {
-            if (finish[i]==0)
+            if(finish[i]==0)
             {
                 canRun=1;
                 for(int j=0;j<r;j++)
                 {
-                    need[i][j]=max[i][j]-alloc[i][j];
                     if(need[i][j]>tempavail[j])
                     {
                         canRun=0;
@@ -28,69 +28,71 @@ int isSafe(int p,int r,int tempavail[],int finish[])
                 {
                     for(int j=0;j<r;j++)
                     {
-                        tempavail[j]+=alloc[i][j];
+                        tempavail[j]+=need[i][j];
                     }
-                     count++;
-                     done++;
-                     finish[i]=1;
-                     printf("P%d->",(i+1));
+                    done=1;
+                    count++;
+                    finish[i]=1;
+                    printf("P%d->",(i+1));
                 }
             }
         }
         if(done==0)
-         return 0;
+        {
+            printf("\n deadlock detected\n");
+        }
     }
-    printf("\n");
-    return 1;
+    printf("\n no deadlock detected");
 }
+
+
+
 
 int main()
 {
-    printf("enter the number of processes\n");
+    printf("enter the number of processs\n");
     scanf("%d",&p);
     
     printf("enter the number of resources\n");
     scanf("%d",&r);
     
-    printf("enter the maximum resources\n");
-    for(int i=0; i<p;i++)
+    printf("enter the maximum resources for each process\n");
+    for(int i=0;i<p;i++)
     {
-        for(int j=0;j<r;j++)
+        for(int j=0;i<r;j++)
         {
             scanf("%d",&max[i][j]);
         }
     }
     
-     printf("enter the allocated resources\n");
-    for(int i=0; i<p;i++)
+    printf("enter the allocated resources for each process\n");
+    for(int i=0;i<p;i++)
     {
-        for(int j=0;j<r;j++)
+        for(int j=0;i<r;j++)
         {
             scanf("%d",&alloc[i][j]);
         }
     }
     
-    printf("enter the available resources\n");
+    for(int i=0;i<p;i++)
+    {
+        for(int j=0;i<r;j++)
+        {
+            need[i][j]=max[i][j]=alloc[i][j];
+        }
+    }
+    
+    printf("enter the available resource of each type\n");
     for(int i=0;i<r;i++)
     {
         scanf("%d",&avail[i]);
         tempavail[i]=avail[i];
     }
-    
     for(int i=0;i<p;i++)
     {
-        finish[i]=0;
+      finish[i]=0;
     }
     
-    int m=isSafe(p,r,tempavail,finish);
-    if(m)
-    {
-        printf("no deadlock detected\n");
-    }
-    else
-    {
-        printf("deadlock detected\n");
-    }
+    isSafe();
     
-    return 0;
 }

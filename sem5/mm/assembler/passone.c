@@ -7,7 +7,7 @@ int main() {
     char code[10], mnemonic[3];
     int locctr, start, length;
 
-    FILE *input = fopen("input.txt", "r");      // Program instructions
+    FILE *input = fopen("input1.txt", "r");      // Program instructions
     FILE *optab = fopen("optab.txt", "r");      // Operation codes (like ADD, SUB)
     FILE *symtab = fopen("symtab.txt", "w");    // Symbol table to store labels
     FILE *intermediate = fopen("intermediate.txt", "w"); // Stores intermediate file with addresses
@@ -31,7 +31,7 @@ int main() {
         fprintf(intermediate, "%d\t%s\t%s\t%s\n", locctr, label, opcode, operand);
 
         // If label exists, add to symbol table
-        if (strcmp(label, "**") != 0) {
+        if (strcmp(label, "-") != 0) {
             fprintf(symtab, "%s\t%d\n", label, locctr);
         }
 

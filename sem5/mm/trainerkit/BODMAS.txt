@@ -7,11 +7,12 @@ ADDITION:
 200A    MOV BX, [SI]
 200C    ADD AX, BX
 200E    INC DI
-2010    MOV [DI], 0001  ; Appears to be an error/unusual step
-2013    JMP 2018        ; Appears to jump over 2015
-2015    MOV [DI], 0000  ; Likely the target of a jump for a loop
+        JNC 2015
+2010    MOV [DI], 0001  
+2013    JMP 2018        
+2015    MOV [DI], 0000  
 2018    INC DI
-2019    MOV [DI], AX    ; Stores the result (AX) to [DI]
+2019    MOV [DI], AX    
 201B    HLT
 
 SUBTRACTION :

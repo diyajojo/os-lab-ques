@@ -55,7 +55,7 @@ void firstFit(struct node * head, int processSize[],int np)
         }
     }
     
-    printf("process number\tblock number\n");
+    printf("process size\tblock number\n");
     for(int i=0;i<np;i++)
     {
         printf("%d\t\t\t\t",processSize[i]);

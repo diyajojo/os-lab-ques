@@ -1,0 +1,40 @@
+DATA SEGMENT
+ARRAY DW 5,35,42,12,89,10
+DATA ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE,DS:DATA
+
+START:
+    MOV AX, DATA
+    MOV DS, AX          ; Initialize data segment
+
+    LEA SI, ARRAY
+    MOV BX, [SI]        ; BX = number of elements
+    DEC BX              ; Outer loop runs n-1 times
+
+OUTERLOOP:
+    LEA SI, ARRAY+2     ; Point to first data element
+    MOV CX, BX          ; CX = inner loop counter
+
+INNERLOOP:
+    MOV AX, [SI]
+    CMP AX, [SI+2]
+    JBE NOSWAP          ; If AX <= next, no swap
+    (if descending order use JAE instead of JBE)
+    XCHG AX, [SI+2]     ; Swap AX with next element
+    MOV [SI], AX        ; Put swapped value back
+
+NOSWAP:
+    ADD SI, 2           ; Move to next element
+    DEC CX
+    JNZ INNERLOOP       ; Repeat until CX = 0
+
+    DEC BX
+    JNZ OUTERLOOP       ; Repeat outer loop
+
+    MOV AH, 4CH
+    INT 21H             ; Exit to DOS
+
+CODE ENDS
+END START

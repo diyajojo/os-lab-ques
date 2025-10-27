@@ -47,7 +47,7 @@ int main()
         }
         if(priorityindex==-1)
         {
-            time ++;
+            time ++;    
         }
         else
         {
