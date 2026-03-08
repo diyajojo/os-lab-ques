@@ -24,7 +24,7 @@ int main() {
         fscanf(input, "%s %s %s", label, opcode, operand);
     } else {
         locctr = 0;
-    }
+    }x  
 
     // Process all instructions until END
     while (strcmp(opcode, "END") != 0) {

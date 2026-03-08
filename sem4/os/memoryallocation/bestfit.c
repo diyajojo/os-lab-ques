@@ -81,7 +81,6 @@ void bestFit(struct node *head,int processSize[],int np)
 int main()
 {
     int nb,np;
-    
     printf("enter the number of memory blocks\n");
     scanf("%d",&nb);
     
