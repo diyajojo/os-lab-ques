@@ -43,7 +43,7 @@ int main()
 
             int r = recv(s, ack, sizeof(ack), 0);
 
-            if(r > 0)
+            if(r > 0 && strcmp(ack, "ACK") == 0)
             {
                 printf("ack received for packet %d\n", i+1);
 
@@ -55,7 +55,7 @@ int main()
             }
         }
     }
-
+    printf("all packets have sucessfully recieved ack\n");
     close(s);
 
     return 0;

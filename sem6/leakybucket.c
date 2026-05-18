@@ -36,7 +36,7 @@ int main()
         bucket -= leak;
     }
 
-    time = n + 1;
+    time = n;
 
     while(bucket > 0)
     {
