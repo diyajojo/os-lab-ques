@@ -1,60 +1,57 @@
 #include <stdio.h>
-
-struct router
-{
-    int cost[10];
-    int from[10];
-} rt[10];
+#include <stdlib.h>
+#include <unistd.h>
 
 int main()
 {
-    int r;
-
-    printf("Enter number of routers:\n");
-    scanf("%d", &r);
-
-    int cost[r][r];
-
-    printf("Enter the cost matrix:\n");
-
-    for(int i = 0; i < r; i++)
+    struct router
     {
-        for(int j = 0; j < r; j++)
+        int cost[10];
+        int from[10];
+    } rtr[10];
+    
+    int n,cost[100][100];
+    printf("enter number of routers\n");
+    scanf("%d",&n);
+    
+    printf("enter the cost matrix\n");
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
         {
-            scanf("%d", &cost[i][j]);
-
-            rt[i].cost[j] = cost[i][j];
-            rt[i].from[j] = j;
+            scanf("%d",&cost[i][j]);
+            
+            rtr[i].cost[j]=cost[i][j];
+            rtr[i].from[j]=j;
         }
     }
-
-    // Distance vector algorithm
-    for(int i = 0; i < r; i++)
+    
+    for(int i=0;i<n;i++)
     {
-        for(int j = 0; j < r; j++)
+        for(int j=0;j<n;j++)
         {
-            for(int k = 0; k < r; k++)
+            for(int k=0;k<n;k++)
             {
-                if(rt[i].cost[j] > cost[i][k] + rt[k].cost[j])
+                if(rtr[i].cost[j]>cost[i][k]+rtr[k].cost[j])
                 {
-                    rt[i].cost[j] = cost[i][k] + rt[k].cost[j];
-                    rt[i].from[j] = k;
+                    rtr[i].cost[j]=cost[i][k]+rtr[k].cost[j];
+                    rtr[i].from[j]=k;
                 }
             }
         }
     }
-
-    // Print routing table
-    for(int i = 0; i < r; i++)
+    for(int i=0;i<n;i++)
     {
-        printf("\nRouting table for router %d\n", i + 1);
-
-        for(int j = 0; j < r; j++)
+        printf("routing table for %d:\n",i+1);
+        
+        for(int j=0;j<n;j++)
         {
-            printf("%d -> %d = %d\n",
-                   j + 1,
-                   rt[i].from[j] + 1,
-                   rt[i].cost[j]);
+            printf("%d->%d=%d\n",j+1,rtr[i].from[j]+1,rtr[i].cost[j]);
         }
     }
+    
+    
+    
+    
+    return 0;
 }
